@@ -2,9 +2,9 @@
  * Tamagocci
  */
 function Tamagocci(goodPicture, badPicture, deadPicture) {
-    var that = this;
-    var weight = 5;
-    var happiness = 5;
+    var that         = this;
+    var weight       = 5;
+    var happiness    = 5;
     this.age         = 0;
     this.minWeight   = 1;
     this.maxWeight   = 10;
@@ -80,7 +80,6 @@ function Tamagocci(goodPicture, badPicture, deadPicture) {
             that.isDeadFunction();
         }
     });
-
 }
 
 /**
