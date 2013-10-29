@@ -2,8 +2,9 @@
  * Tamagocci
  */
 function Tamagocci(goodPicture, badPicture, deadPicture) {
-    this.weight      = 5;
-    this.happiness   = 5;
+    var that = this;
+    var weight = 5;
+    var happiness = 5;
     this.age         = 0;
     this.minWeight   = 1;
     this.maxWeight   = 10;
@@ -13,11 +14,11 @@ function Tamagocci(goodPicture, badPicture, deadPicture) {
     this.deadPicture = deadPicture || "pk_dead.gif";
 
     this.eat = function() {
-        this.weight += 2;
+        weight += 2;
     };
 
     this.play = function() {
-        this.weight--;
+        weight--;
         this.happiness++;
     };
 
@@ -29,46 +30,58 @@ function Tamagocci(goodPicture, badPicture, deadPicture) {
     };
 
     this.isDeadFunction = function() {
-        return this.weight > this.maxWeight ||
-            this.weight < this.minWeight ||
-            this.happiness <= 0;
+        this.isDead = weight > this.maxWeight ||
+            weight < this.minWeight ||
+            happiness <= 0;
+
+        if (this.isDead) {
+            this.ondie();
+        }
     };
 
+    this.ondie = function() {};
+
     this.getPicture = function() {
-        if (this.isDead()) {
+        if (this.isDead) {
             return this.deadPicture;
         }
 
-        if (this.happiness == 0) {
+        if (happiness == 0) {
             return this.deadPicture;
         }
 
-        if (this.happiness < 3) {
+        if (happiness < 3) {
             return this.badPicture;
         }
 
-        if (this.weight - 3 < this.minWeight) {
+        if (weight - 3 < this.minWeight) {
             return this.badPicture;
         }
 
-        if (this.weight + 3 > this.maxWeight) {
+        if (weight + 3 > this.maxWeight) {
             return this.badPicture;
         }
 
         return this.goodPicture;
     };
 
-//    Object.defineProperty(this, "weight", {
-//        set: function(weightValue) {
-//        }
-//    });
-//
-//    Object.defineProperty(this, "happiness", {
-//        set: function(happinessValue) {
-//        }
-//    });
-}
+    Object.defineProperty(this, "weight", {
+        get: function() { return weight; },
+        set: function(newValue) {
+            weight = newValue;
+            that.isDeadFunction();
+        }
+    });
 
+    Object.defineProperty(this, "happiness", {
+        get: function() { return happiness; },
+        set: function(newValue) {
+            happiness = newValue;
+            that.isDeadFunction();
+        }
+    });
+
+}
 
 /**
  * HelloKitty
